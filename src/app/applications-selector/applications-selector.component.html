@@ -1,0 +1,32 @@
+<h2>Selected Application: {{selectedApplication}}</h2>
+
+<div class="search-input-element-wrapper" #searchInputElementWrapper>
+  <mat-form-field
+    appearance="outline"
+    cdkOverlayOrigin
+    #originOverlay="cdkOverlayOrigin"
+    [class.drop-down-input-active]="showPanel$ | async">
+    <input
+      matInput
+      [formControl]="searchInputControl"
+      placeholder="Start to type..."
+      autocomplete="off"/>
+  </mat-form-field>
+</div>
+
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayDisableClose]="true"
+  [cdkConnectedOverlayOrigin]="originOverlay"
+  [cdkConnectedOverlayOpen]="showPanel$ | async"
+  [cdkConnectedOverlayPositions]="positions">
+  <div class="applications-list-wrapper" [ngStyle]="{'width.px': searchInputElementWrapper.offsetWidth }">
+    <div *ngFor="let application of applications" class="application-item">
+      <span>{{application}}</span>
+      <button (click)="selectApplication(application)">select application</button>
+    </div>
+  </div>
+</ng-template>
