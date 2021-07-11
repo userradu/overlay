@@ -1,27 +1,26 @@
-# Overlay
+# Overlay Package
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.0.
+A way to open floating panels on the screen.
 
-## Development server
+## Creating Overlays
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+`overlay.create()` will return an `OverlayRef` instance. This instance is a handle for managing that specific overlay.
 
-## Code scaffolding
+The `OverlayRef` is a `PortalOutlet` - once created, content can be added by attaching a Portal.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    const overlayRef = overlay.create();
+    const userProfilePortal = new ComponentPortal(UserProfile);
+    overlayRef.attach(userProfilePortal);
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+# Portals
+A Portal is a piece of UI that can be dynamically rendered to an open slot on the page.
 
-## Running unit tests
+The "piece of UI" can be either a Component, a TemplateRef or a DOM element and the "open slot" is a PortalOutlet.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    <div class="example-portal-outlet">
+      <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
+    </div>
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+    <button (click)="selectedPortal = componentPortal">Render component portal</button>
+    <button (click)="selectedPortal = templatePortal">Render template portal</button>
